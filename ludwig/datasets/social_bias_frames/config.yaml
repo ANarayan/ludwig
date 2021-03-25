@@ -1,0 +1,9 @@
+version: 1.0
+download_urls:
+  - "https://homes.cs.washington.edu/~msap/social-bias-frames/SBIC.v2.tgz"
+split_filenames:
+  train_file: SBIC.v2.trn.csv
+  test_file: SBIC.v2.tst.csv
+  val_file: SBIC.v2.dev.csv
+download_file_type: csv
+csv_filename: social_bias_frames.csv
