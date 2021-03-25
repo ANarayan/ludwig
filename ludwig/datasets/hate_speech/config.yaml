@@ -1,0 +1,5 @@
+version: 1.0
+download_urls:
+  - https://raw.githubusercontent.com/t-davidson/hate-speech-and-offensive-language/master/data/labeled_data.csv
+download_file_type: csv
+csv_filename: labeled_data.csv
