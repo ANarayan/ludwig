@@ -36,7 +36,7 @@ class YelpPolarity(TarDownloadMixin, MultifileJoinProcessMixin,
             Xiang Zhang et al., 2015
     """
     def __init__(self, cache_dir=DEFAULT_CACHE_LOCATION):
-        super().__init__(dataset_name="yelp_polarity", cache_dir=cache_dir)
+        super().__init__(dataset_name="yelp_review_polarity", cache_dir=cache_dir)
 
     def process_downloaded_dataset(self):
         super(YelpPolarity, self).process_downloaded_dataset(header=None)
