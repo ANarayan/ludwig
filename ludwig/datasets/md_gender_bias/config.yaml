@@ -1,0 +1,18 @@
+version: 1.0
+download_urls:
+  - "http://parl.ai/downloads/md_gender/gend_multiclass_10072020.tgz"
+split_filenames:
+  wizard:
+    train_file: data_to_release/wizard/train.jsonl
+    test_file: data_to_release/wizard/test.jsonl
+    val_file: data_to_release/wizard/valid.jsonl
+  image_chat:
+    train_file: data_to_release/image_chat/engaging_imagechat_gender_captions_hashed.train.jsonl
+    test_file: data_to_release/image_chat/engaging_imagechat_gender_captions_hashed.test.jsonl
+    val_file: data_to_release/image_chat/engaging_imagechat_gender_captions_hashed.valid.jsonl
+  funpedia:
+    train_file: data_to_release/funpedia/train.jsonl
+    test_file: data_to_release/funpedia/test.jsonl
+    val_file: data_to_release/funpedia/valid.jsonl  
+download_file_type: jsonl
+csv_filename: md_gender.csv

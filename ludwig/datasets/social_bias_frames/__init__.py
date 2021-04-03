@@ -15,35 +15,40 @@
 # limitations under the License.
 # ==============================================================================
 from ludwig.datasets.base_dataset import BaseDataset, DEFAULT_CACHE_LOCATION
-from ludwig.datasets.mixins.download import  TarDownloadMixin
+from ludwig.datasets.mixins.download import TarDownloadMixin
 from ludwig.datasets.mixins.load import CSVLoadMixin
 from ludwig.datasets.mixins.process import *
+
 
 def load(cache_dir=DEFAULT_CACHE_LOCATION, split=True):
     dataset = SocialBiasFrames(cache_dir=cache_dir)
     return dataset.load(split=split)
 
-class SocialBiasFrames(TarDownloadMixin, MultifileJoinProcessMixin,
-                 CSVLoadMixin, BaseDataset):
+
+class SocialBiasFrames(
+    TarDownloadMixin, MultifileJoinProcessMixin, CSVLoadMixin, BaseDataset
+):
     """
-        Social Bias Frames Dataset 
-        Details:
-            
-        Dataset source: 
-            Sap, Maarten, et al. "Social bias frames: Reasoning about social 
-            and power implications of language." 
-            arXiv preprint arXiv:1911.03891 (2019).
+    Social Bias Frames Dataset
+    Details:
+
+    Dataset source:
+        Sap, Maarten, et al. "Social bias frames: Reasoning about social
+        and power implications of language."
+        arXiv preprint arXiv:1911.03891 (2019).
     """
+
     def __init__(self, cache_dir=DEFAULT_CACHE_LOCATION):
-        super().__init__(dataset_name="social_bias_frames", cache_dir=cache_dir)
+        super().__init__(
+            dataset_name="social_bias_frames", cache_dir=cache_dir
+        )
 
-    def load_processed_dataset(self,split):
+    def load_processed_dataset(self, split):
         processed_df = super(SocialBiasFrames, self).load_processed_dataset(
-                                                        split=split)
-        processed_df['intentYN'] = processed_df['intentYN'].astype(str) 
-        processed_df['sexYN'] = processed_df['sexYN'].astype(str)
-        processed_df['offensiveYN'] = processed_df['offensiveYN'].astype(str)
+            split=split
+        )
+        processed_df["intentYN"] = processed_df["intentYN"].astype(str)
+        processed_df["sexYN"] = processed_df["sexYN"].astype(str)
+        processed_df["offensiveYN"] = processed_df["offensiveYN"].astype(str)
+        processed_df["speakerMinorityYN"] = processed_df["speakerMinorityYN"].astype(str)
         return processed_df
-
-
-    
