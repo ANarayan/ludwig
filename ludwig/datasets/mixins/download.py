@@ -91,17 +91,14 @@ class TarDownloadMixin:
                     t.update_to
                 )
 
-            download_folder_name = ".".join(url.split('/')[-1].split('.')[:-1])
+            download_folder_name = url.split('/')[-1].split('.')[0]
             file_path = os.path.join(self.raw_temp_path, filename)
             with tarfile.open(file_path) as tar_file:
                 tar_file.extractall(path=self.raw_temp_path)
 
-            extracted_folder_path = os.path.join(self.raw_temp_path, 
-                                                 download_folder_name)
-
-            if os.path.isdir(extracted_folder_path):
-                for f in os.scandir(extracted_folder_path):
-                    shutil.copyfile(f,os.path.join(self.raw_temp_path, f.name))
+            for f in os.scandir(os.path.join(self.raw_temp_path, 
+                                             download_folder_name)):
+                shutil.copyfile(f, os.path.join(self.raw_temp_path, f.name))
 
         os.rename(self.raw_temp_path, self.raw_dataset_path)
 

@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # coding=utf-8
-# Copyright (c) 2019 Uber Technologies, Inc.
+# Copyright (c) 2021 Uber Technologies, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,24 +14,32 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
+import os
+import pandas as pd
 from ludwig.datasets.base_dataset import BaseDataset, DEFAULT_CACHE_LOCATION
-from ludwig.datasets.mixins.download import UncompressedFileDownloadMixin
+from ludwig.datasets.mixins.kaggle import KaggleDownloadMixin
 from ludwig.datasets.mixins.load import CSVLoadMixin
 from ludwig.datasets.mixins.process import IdentityProcessMixin
 
 
-def load(cache_dir=DEFAULT_CACHE_LOCATION, split=False):
-    dataset = Irony(cache_dir=cache_dir)
+def load(cache_dir=DEFAULT_CACHE_LOCATION, split=False, kaggle_username=None, kaggle_api_key=None):
+    dataset = Temperature(
+        cache_dir=cache_dir,
+        kaggle_username=kaggle_username,
+        kaggle_api_key=kaggle_api_key
+    )
     return dataset.load(split=split)
 
 
-class Irony(UncompressedFileDownloadMixin, IdentityProcessMixin,
-            CSVLoadMixin, BaseDataset):
-    """The Reddit Irony dataset.
-
-    Source Paper: 
-    Humans Require Context to Infer Ironic Intent (so Computers Probably do, too)
-        Byron C Wallace, Do Kook Choe, Laura Kertz, and Eugene Charniak
+class Temperature(CSVLoadMixin, IdentityProcessMixin, KaggleDownloadMixin, BaseDataset):
+    """Hourly temperature dataset from Kaggle.
     """
-    def __init__(self, cache_dir=DEFAULT_CACHE_LOCATION):
-        super().__init__(dataset_name="irony", cache_dir=cache_dir)
+
+    def __init__(self,
+                 cache_dir=DEFAULT_CACHE_LOCATION,
+                 kaggle_username=None,
+                 kaggle_api_key=None):
+        self.kaggle_username = kaggle_username
+        self.kaggle_api_key = kaggle_api_key
+        self.is_kaggle_competition = False
+        super().__init__(dataset_name='temperature', cache_dir=cache_dir)

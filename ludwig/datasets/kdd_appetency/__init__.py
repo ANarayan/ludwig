@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # coding=utf-8
-# Copyright (c) 2019 Uber Technologies, Inc.
+# Copyright (c) 2021 Uber Technologies, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,24 +14,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-from ludwig.datasets.base_dataset import BaseDataset, DEFAULT_CACHE_LOCATION
-from ludwig.datasets.mixins.download import UncompressedFileDownloadMixin
-from ludwig.datasets.mixins.load import CSVLoadMixin
-from ludwig.datasets.mixins.process import IdentityProcessMixin
+from ludwig.datasets.base_dataset import DEFAULT_CACHE_LOCATION
+from ludwig.datasets.kdd_dataset import KDDCup2009Dataset
 
 
 def load(cache_dir=DEFAULT_CACHE_LOCATION, split=False):
-    dataset = Irony(cache_dir=cache_dir)
+    dataset = KDDAppetency(cache_dir=cache_dir)
     return dataset.load(split=split)
 
 
-class Irony(UncompressedFileDownloadMixin, IdentityProcessMixin,
-            CSVLoadMixin, BaseDataset):
-    """The Reddit Irony dataset.
-
-    Source Paper: 
-    Humans Require Context to Infer Ironic Intent (so Computers Probably do, too)
-        Byron C Wallace, Do Kook Choe, Laura Kertz, and Eugene Charniak
+class KDDAppetency(KDDCup2009Dataset):
     """
+    The KDD Cup 2009 Appetency dataset
+
+    Additional Details:
+
+    https://www.kdd.org/kdd-cup/view/kdd-cup-2009/Data
+    """
+
     def __init__(self, cache_dir=DEFAULT_CACHE_LOCATION):
-        super().__init__(dataset_name="irony", cache_dir=cache_dir)
+        super().__init__(task_name="appetency", cache_dir=cache_dir)
